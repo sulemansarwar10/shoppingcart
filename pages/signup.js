@@ -1,12 +1,97 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function signup() {
     const router = useRouter()
+    const [user, setuser] = useState({ fname: "", lname: "", email: "", contact: "", password: "", cpassword: "" })
+    const onchange = (e) => {
+        setuser({ ...user, [e.target.name]: e.target.value })
+        //  console.log(user)
+    }
+    const submithandle = async (e) => {
+        e.preventDefault();
+        if (user.fname == "" || user.lname == "" || user.email == "" || user.contact == "" || user.password == "" || user.cpassword == "") {
+            toast.warn('please fill all fields', {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+        else if (user.password !== user.cpassword) {
+            toast.warn('Passwards are not matching', {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        } else {
+
+            try {
+                const response = await fetch(
+                    `/api/user`,
+                    {
+                        body: JSON.stringify(user),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        method: 'POST'
+                    }
+                );
+
+                const json = await response.json(); // parses JSON response into native JavaScript objects
+
+                console.log("sign in response", json)
+                if (json.success) {
+                    toast.success(json.msg, {
+                        position: "bottom-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                    setuser({ fname: "", lname: "", email: "", contact: "", password: "", cpassword: "" })
+                } else {
+                    toast.warn(json.msg, {
+                        position: "bottom-right",
+                        autoClose: 3000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                }
+            } catch (error) {
+
+            }
+
+        }
+    }
+
     return (
         <div>
-
-
+            <ToastContainer
+                position="bottom-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <div className="font-mono ">
 
                 <div className="container mx-auto">
@@ -29,9 +114,11 @@ function signup() {
                                             </label>
                                             <input
                                                 className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                                id="firstName"
+                                                name="fname"
+                                                id="fname"
                                                 type="text"
                                                 placeholder="First Name"
+                                                value={user.fname} onChange={onchange}
                                             />
                                         </div>
                                         <div className="md:ml-2">
@@ -40,9 +127,11 @@ function signup() {
                                             </label>
                                             <input
                                                 className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                                id="lastName"
+                                                name="lname"
+                                                id="lname"
                                                 type="text"
                                                 placeholder="Last Name"
+                                                value={user.lname} onChange={onchange}
                                             />
                                         </div>
                                     </div>
@@ -52,9 +141,11 @@ function signup() {
                                         </label>
                                         <input
                                             className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                            name="email"
                                             id="email"
                                             type="email"
                                             placeholder="Email"
+                                            value={user.email} onChange={onchange}
                                         />
                                     </div>
                                     <div className="mb-4">
@@ -63,9 +154,11 @@ function signup() {
                                         </label>
                                         <input
                                             className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                            id="contactno"
-                                            type="contactno"
+                                            name="contact"
+                                            id="contact"
+                                            type="text"
                                             placeholder="Contact No"
+                                            value={user.contact} onChange={onchange}
                                         />
                                     </div>
                                     <div className="mb-4 md:flex md:justify-between">
@@ -75,9 +168,11 @@ function signup() {
                                             </label>
                                             <input
                                                 className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border  rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                                                name="password"
                                                 id="password"
                                                 type="password"
                                                 placeholder="******************"
+                                                value={user.password} onChange={onchange}
                                             />
                                             {/* <p className="text-xs italic text-red-500">Please choose a password.</p> */}
                                         </div>
@@ -87,9 +182,11 @@ function signup() {
                                             </label>
                                             <input
                                                 className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                                                id="c_password"
+                                                name="cpassword"
+                                                id="cpassword"
                                                 type="password"
                                                 placeholder="******************"
+                                                value={user.cpassword} onChange={onchange}
                                             />
                                         </div>
                                     </div>
@@ -97,6 +194,7 @@ function signup() {
                                         <button
                                             className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
                                             type="button"
+                                            onClick={submithandle}
                                         >
                                             Register Account
                                         </button>

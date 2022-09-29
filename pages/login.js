@@ -1,11 +1,47 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function login() {
     const router = useRouter()
+    const [user, setuser] = useState({ email: "", password: "" })
+    const onchange = (e) => {
+        setuser({ ...user, [e.target.name]: e.target.value })
+        //  console.log(user)
+    }
+    const submithandle = async (e) => {
+        e.preventDefault();
+
+        if (user.email == "" || user.password == "") {
+            toast.warn('please fill all fields', {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+        else {
+            console.log(user)
+
+        }
+    }
+
     return (
         <div>
-
+            <ToastContainer
+                position="bottom-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <div className="antialiased bg-gradient-to-br from-green-100 to-white">
                 <div className="container px-6 mx-auto">
                     <div
@@ -39,12 +75,14 @@ function login() {
                                 <form action="" className="w-full">
                                     <div id="input" className="flex flex-col w-full my-5">
                                         <label className="text-gray-500 mb-2"
-                                        >Username</label>
+                                        >Email</label>
                                         <input
                                             type="text"
-                                            id="username"
+                                            id="email"
+                                            name="email"
                                             placeholder="Please insert your username"
                                             className="appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-green-600 focus:shadow-lg"
+                                            value={user.email} onChange={onchange}
                                         />
                                     </div>
                                     <div id="input" className="flex flex-col w-full my-5">
@@ -54,13 +92,16 @@ function login() {
                                         <input
                                             type="password"
                                             id="password"
+                                            name="password"
                                             placeholder="Please insert your password"
                                             className="appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-green-600 focus:shadow-lg"
+                                            value={user.password} onChange={onchange}
                                         />
                                     </div>
                                     <div id="button" className="flex flex-col w-full my-5">
                                         <button
                                             type="button"
+                                            onClick={submithandle}
                                             className="w-full py-4 bg-green-600 rounded-lg text-green-100">
                                             <div className="flex flex-row items-center justify-center">
                                                 <div className="mr-2">

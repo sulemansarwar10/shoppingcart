@@ -1,8 +1,46 @@
-import React from 'react'
-
+import React, { useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function contactus() {
+    const [user, setuser] = useState({ name: "", email: "", contact: "", message: "" })
+    const onchange = (e) => {
+        setuser({ ...user, [e.target.name]: e.target.value })
+        //  console.log(user)
+    }
+    const submithandle = async (e) => {
+        e.preventDefault();
+        if (user.name == "" || user.email == "" || user.contact == "" || user.message == "") {
+            toast.warn('please fill all fields', {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+        else {
+            console.log(user)
+
+
+        }
+    }
+
+
     return (
         <div>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <section className="text-gray-600 body-font relative">
                 <div className="container px-5 py-24 mx-auto flex sm:flex-nowrap flex-wrap">
                     <div className="lg:w-2/3 md:w-1/2 bg-gray-300 rounded-lg overflow-hidden sm:mr-10 p-10 flex items-end justify-start relative">
@@ -25,17 +63,21 @@ function contactus() {
                         <p className="leading-relaxed mb-5 text-gray-600">Post your queries & Feedback </p>
                         <div className="relative mb-4">
                             <label className="leading-7 text-sm text-gray-600">Name</label>
-                            <input type="text" id="name" name="name" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                            <input type="text" id="name" name="name" value={user.name} onChange={onchange} className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                         </div>
                         <div className="relative mb-4">
                             <label className="leading-7 text-sm text-gray-600">Email</label>
-                            <input type="email" id="email" name="email" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                            <input type="email" id="email" name="email" value={user.email} onChange={onchange} className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                        </div>
+                        <div className="relative mb-4">
+                            <label className="leading-7 text-sm text-gray-600">Contact No</label>
+                            <input type="text" id="contact" name="contact" value={user.contact} onChange={onchange} className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                         </div>
                         <div className="relative mb-4">
                             <label className="leading-7 text-sm text-gray-600">Message</label>
-                            <textarea id="message" name="message" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+                            <textarea id="message" name="message" value={user.message} onChange={onchange} className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-32 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
                         </div>
-                        <button className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Submit</button>
+                        <button onClick={submithandle} className="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-lg">Submit</button>
                     </div>
                 </div>
             </section>

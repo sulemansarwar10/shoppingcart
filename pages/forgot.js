@@ -1,11 +1,46 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function forgot() {
     const router = useRouter()
+    const [user, setuser] = useState({ email: "" })
+    const onchange = (e) => {
+        setuser({ ...user, [e.target.name]: e.target.value })
+        //  console.log(user)
+    }
+    const submithandle = async (e) => {
+        e.preventDefault();
+
+        if (user.email == "") {
+            toast.warn('please fill all fields', {
+                position: "bottom-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+        else {
+            console.log(user)
+
+        }
+    }
     return (
         <div>
-
+            <ToastContainer
+                position="bottom-right"
+                autoClose={3000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <div className="font-mono bg-green-100">
 
                 <div className="container mx-auto">
@@ -33,14 +68,17 @@ function forgot() {
                                         <input
                                             className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                             id="email"
+                                            name="email"
                                             type="email"
                                             placeholder="Enter Email Address..."
+                                            value={user.email} onChange={onchange}
                                         />
                                     </div>
                                     <div className="mb-6 text-center">
                                         <button
                                             className="w-full px-4 py-2 font-bold text-white bg-red-500 rounded-full hover:bg-red-700 focus:outline-none focus:shadow-outline"
                                             type="button"
+                                            onClick={submithandle}
                                         >
                                             Reset Password
                                         </button>
