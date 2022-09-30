@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useRouter } from 'next/router'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import shopcontext from '../context/shopcontext';
+
 function forgot() {
+    const context = useContext(shopcontext)
+    const { successtoast, warntoast } = context;
+
     const router = useRouter()
     const [user, setuser] = useState({ email: "" })
     const onchange = (e) => {
@@ -13,34 +16,39 @@ function forgot() {
         e.preventDefault();
 
         if (user.email == "") {
-            toast.warn('please fill all fields', {
-                position: "bottom-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            warntoast('please fill all fields')
         }
         else {
-            console.log(user)
+            try {
+                const response = await fetch(
+                    `/api/passreset`,
+                    {
+                        body: JSON.stringify(user),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        method: 'POST'
+                    }
+                );
+
+                const json = await response.json(); // parses JSON response into native JavaScript objects
+
+                console.log("sign in response", json)
+                if (json.success) {
+
+                    successtoast(json.msg)
+                    setuser({ email: "" })
+                } else {
+                    warntoast(json.msg)
+                }
+            } catch (error) {
+
+            }
 
         }
     }
     return (
         <div>
-            <ToastContainer
-                position="bottom-right"
-                autoClose={3000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            />
             <div className="font-mono bg-green-100">
 
                 <div className="container mx-auto">

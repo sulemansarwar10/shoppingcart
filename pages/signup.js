@@ -1,38 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useRouter } from 'next/router'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import shopcontext from '../context/shopcontext';
 function signup() {
+    const context = useContext(shopcontext)
+    const { successtoast, warntoast } = context;
     const router = useRouter()
     const [user, setuser] = useState({ fname: "", lname: "", email: "", contact: "", password: "", cpassword: "" })
     const onchange = (e) => {
         setuser({ ...user, [e.target.name]: e.target.value })
-        //  console.log(user)
     }
     const submithandle = async (e) => {
         e.preventDefault();
         if (user.fname == "" || user.lname == "" || user.email == "" || user.contact == "" || user.password == "" || user.cpassword == "") {
-            toast.warn('please fill all fields', {
-                position: "bottom-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            warntoast('please fill all fields')
         }
         else if (user.password !== user.cpassword) {
-            toast.warn('Passwards are not matching', {
-                position: "bottom-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            warntoast('Passwards are not matching')
+
         } else {
 
             try {
@@ -51,26 +35,11 @@ function signup() {
 
                 console.log("sign in response", json)
                 if (json.success) {
-                    toast.success(json.msg, {
-                        position: "bottom-right",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
+
+                    successtoast(json.msg)
                     setuser({ fname: "", lname: "", email: "", contact: "", password: "", cpassword: "" })
                 } else {
-                    toast.warn(json.msg, {
-                        position: "bottom-right",
-                        autoClose: 3000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
+                    warntoast(json.msg)
                 }
             } catch (error) {
 
@@ -81,17 +50,6 @@ function signup() {
 
     return (
         <div>
-            <ToastContainer
-                position="bottom-right"
-                autoClose={3000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            />
             <div className="font-mono ">
 
                 <div className="container mx-auto">

@@ -27,15 +27,14 @@ const handler = async (req, res) => {
 
     })
     await u.save();
-    res.status(200).json({ success: true, msg: "Account created successfully" })
+    return res.status(200).json({ success: true, msg: "Account created successfully" })
 
   } else {
-    res.status(400).json({ error: "this method is not allowed" })
+    return res.status(400).json({ error: "this method is not allowed" })
 
     // Handle any other HTTP method
   }
 
-  res.status(200).json(req.body)
 
 }
 

@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState, useContext } from 'react'
+import shopcontext from '../context/shopcontext';
 function contactus() {
+
+    const context = useContext(shopcontext)
+    const { successtoast, warntoast } = context;
+
     const [user, setuser] = useState({ name: "", email: "", contact: "", message: "" })
     const onchange = (e) => {
         setuser({ ...user, [e.target.name]: e.target.value })
@@ -10,18 +13,34 @@ function contactus() {
     const submithandle = async (e) => {
         e.preventDefault();
         if (user.name == "" || user.email == "" || user.contact == "" || user.message == "") {
-            toast.warn('please fill all fields', {
-                position: "bottom-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            warntoast('please fill all fields')
         }
         else {
-            console.log(user)
+            try {
+                const response = await fetch(
+                    `/api/contact`,
+                    {
+                        body: JSON.stringify(user),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        method: 'POST'
+                    }
+                );
+
+                const json = await response.json(); // parses JSON response into native JavaScript objects
+
+                console.log("sign in response", json)
+                if (json.success) {
+
+                    successtoast(json.msg)
+                    setuser({ name: "", email: "", contact: "", message: "" })
+                } else {
+                    warntoast(json.msg)
+                }
+            } catch (error) {
+
+            }
 
 
         }
@@ -30,17 +49,6 @@ function contactus() {
 
     return (
         <div>
-            <ToastContainer
-                position="bottom-right"
-                autoClose={3000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            />
             <section className="text-gray-600 body-font relative">
                 <div className="container px-5 py-24 mx-auto flex sm:flex-nowrap flex-wrap">
                     <div className="lg:w-2/3 md:w-1/2 bg-gray-300 rounded-lg overflow-hidden sm:mr-10 p-10 flex items-end justify-start relative">

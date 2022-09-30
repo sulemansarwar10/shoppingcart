@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useRouter } from 'next/router'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import shopcontext from '../context/shopcontext';
 function login() {
+    const context = useContext(shopcontext)
+    const { successtoast, warntoast } = context;
+
     const router = useRouter()
     const [user, setuser] = useState({ email: "", password: "" })
     const onchange = (e) => {
@@ -13,35 +15,42 @@ function login() {
         e.preventDefault();
 
         if (user.email == "" || user.password == "") {
-            toast.warn('please fill all fields', {
-                position: "bottom-right",
-                autoClose: 3000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            });
+            warntoast('please fill all fields')
         }
         else {
-            console.log(user)
+            try {
+                const response = await fetch(
+                    `/api/signin`,
+                    {
+                        body: JSON.stringify(user),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        method: 'POST'
+                    }
+                );
+
+                const json = await response.json(); // parses JSON response into native JavaScript objects
+
+                console.log("sign in response", json)
+                if (json.success) {
+
+                    successtoast(json.msg)
+                    setuser({ email: "", password: "" })
+                } else {
+                    warntoast(json.msg)
+                }
+            } catch (error) {
+
+            }
+
+
 
         }
     }
 
     return (
         <div>
-            <ToastContainer
-                position="bottom-right"
-                autoClose={3000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            />
             <div className="antialiased bg-gradient-to-br from-green-100 to-white">
                 <div className="container px-6 mx-auto">
                     <div
