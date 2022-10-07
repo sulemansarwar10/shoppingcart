@@ -1,7 +1,10 @@
 import React from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import MenuIcon from '@mui/icons-material/Menu';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Link from 'next/link';
 const header = () => {
     const router = useRouter()
     return (
@@ -18,12 +21,12 @@ const header = () => {
                         <a onClick={() => router.push('/')} className="mr-5 cursor-pointer hover:text-gray-900">Summer Deals</a>
                         <a onClick={() => router.push('/')} className="mr-5 cursor-pointer hover:text-gray-900">Sides & Desserts</a>
                     </nav>
-                    {/* <button className="inline-flex items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Button
-                        <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4 ml-1" viewBox="0 0 24 24">
-                            <path d="M5 12h14M12 5l7 7-7 7"></path>
-                        </svg>
-                    </button> */}
-                    <AccountCircleIcon onClick={() => router.push('/login')} className='text-5xl cursor-pointer' />
+                    <div className='mt-2'>
+                        <Link href='/login'>
+                            <PersonOutlineIcon className='text-5xl cursor-pointer p-2' />
+                        </Link>
+                        <ShoppingCartIcon className='text-5xl cursor-pointer p-2' />
+                    </div>
                 </div>
             </header></div>
     )
