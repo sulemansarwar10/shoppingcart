@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const fetchuser = async (req, res, next) => {
     //get the user from jwt token and add it to req id
     const token = req.header("auth-token");
-
+    console.log("t",token)
     if (!token) {
         return res.status(401).send({ success: false, msg: "Please authenticate using valid token" })
 

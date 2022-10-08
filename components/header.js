@@ -16,7 +16,7 @@ const header = () => {
                         <span className="ml-3 text-xl cursor-pointer" onClick={() => router.push('/')}>ITALIA FOOD HUB</span>
                     </a>
                     <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
-                        <a onClick={() => router.push('/')} className="mr-5 cursor-pointer hover:text-gray-900">BreakFast</a>
+                        <a onClick={() => router.push('/addproduct')} className="mr-5 cursor-pointer hover:text-gray-900">BreakFast</a>
                         <a onClick={() => router.push('/')} className="mr-5 cursor-pointer hover:text-gray-900">Fast Food</a>
                         <a onClick={() => router.push('/')} className="mr-5 cursor-pointer hover:text-gray-900">Summer Deals</a>
                         <a onClick={() => router.push('/')} className="mr-5 cursor-pointer hover:text-gray-900">Sides & Desserts</a>

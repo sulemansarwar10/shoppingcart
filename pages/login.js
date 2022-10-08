@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import shopcontext from '../context/shopcontext';
 function login() {
     const context = useContext(shopcontext)
-    const { successtoast, warntoast } = context;
+    const { successtoast, warntoast, login, setUser } = context;
 
     const router = useRouter()
     const [user, setuser] = useState({ email: "", password: "" })
@@ -18,34 +18,18 @@ function login() {
             warntoast('please fill all fields')
         }
         else {
-            try {
-                const response = await fetch(
-                    `/api/signin`,
-                    {
-                        body: JSON.stringify(user),
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        method: 'POST'
-                    }
-                );
+            let response = await login(user)
+            console.log("sign in response", response)
+            if (response.success) {
 
-                const json = await response.json(); // parses JSON response into native JavaScript objects
-
-                console.log("sign in response", json)
-                if (json.success) {
-
-                    successtoast(json.msg)
-                    setuser({ email: "", password: "" })
-                } else {
-                    warntoast(json.msg)
-                }
-            } catch (error) {
-
+                successtoast(response.msg)
+                localStorage.setItem("token", response.authtoken)
+                setUser({ email: user.email, token: response.authtoken })
+                setuser({ email: "", password: "" })
+            } else {
+                warntoast(response.msg)
+                localStorage.clear()
             }
-
-
-
         }
     }
 
