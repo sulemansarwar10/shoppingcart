@@ -4,7 +4,32 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const Shopstate = (props) => {
 
-  const [User, setUser] = useState({ name: "", email: "", token: "" })
+  const [Userdata, setUserdata] = useState({ name: "", email: "", token: "" })
+
+  const checktoken = async () => {
+    try {
+      const response = await fetch(
+        `/api/authtoken`,
+        {
+          body: JSON.stringify({ token: localStorage.getItem("token") }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          method: 'POST'
+        }
+      );
+
+      const json = await response.json(); // parses JSON response into native JavaScript objects
+      if (json.success) {
+        setUserdata({ name: json.User.name, email: json.User.email, token: localStorage.getItem("token") })
+      } else {
+        setUserdata({ name: "", email: "", token: "" })
+        localStorage.removeItem("token")
+      }
+    } catch (error) {
+
+    }
+  }
 
 
   const successtoast = (msg) => {
@@ -45,15 +70,6 @@ const Shopstate = (props) => {
 
       const json = await response.json(); // parses JSON response into native JavaScript objects
       return json;
-      // console.log("sign in response", json)
-      // if (json.success) {
-
-      //   successtoast(json.msg)
-      //   localStorage.setItem("token", json.authtoken)
-      //   setUser({ name: user.fname, email: user.email, token: json.authtoken })
-      // } else {
-      //   warntoast(json.msg)
-      // }
     } catch (error) {
 
     }
@@ -62,7 +78,7 @@ const Shopstate = (props) => {
   }
   return (
     <>
-      <Shopcontext.Provider value={{ successtoast, warntoast, login, User, setUser }}>
+      <Shopcontext.Provider value={{ successtoast, warntoast, login, Userdata, setUserdata, checktoken }}>
         <ToastContainer
           position="bottom-right"
           autoClose={3000}

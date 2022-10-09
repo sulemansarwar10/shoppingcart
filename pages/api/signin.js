@@ -19,7 +19,7 @@ const handler = async (req, res) => {
         if (secpass === req.body.password) {
             const data = {
                 user: {
-                    id: user.id,
+                    name: user.fname,
                     email: user.email
                 }
             }

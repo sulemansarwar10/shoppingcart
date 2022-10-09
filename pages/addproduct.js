@@ -4,7 +4,7 @@ import shopcontext from '../context/shopcontext';
 
 const addproduct = () => {
     const context = useContext(shopcontext)
-    const { successtoast, warntoast, User } = context;
+    const { successtoast, warntoast, Userdata } = context;
     const router = useRouter()
     const [product, setproduct] = useState({ name: "", img: "", category: "", price: "", disc: "", token: "" })
     const onchange = (e) => {
@@ -15,8 +15,7 @@ const addproduct = () => {
         if (!localStorage.getItem("token")) {
             router.push('/')
         } else {
-            setproduct({ token: localStorage.getItem("token") })
-
+            setproduct({ ...product, token: localStorage.getItem("token") })
         }
     }, [])
 
@@ -44,15 +43,12 @@ const addproduct = () => {
 
                 const json = await response.json(); // parses JSON response into native JavaScript objects
 
-                console.log("sign in response", json)
                 if (json.success) {
 
                     successtoast(json.msg)
                     setproduct({ name: "", img: "", category: "", price: "", disc: "", })
                 } else {
                     warntoast(json.msg)
-                    localStorage.clear()
-
                 }
             } catch (error) {
 
@@ -127,10 +123,7 @@ const addproduct = () => {
                             />
                         </div>
                         <div className="mb-5">
-                            <label
-
-                                className="mb-3 block text-base font-medium text-[#07074D]"
-                            >
+                            <label className="mb-3 block text-base font-medium text-[#07074D]">
                                 Product Discription
                             </label>
                             <textarea

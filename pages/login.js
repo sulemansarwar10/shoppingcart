@@ -3,10 +3,11 @@ import { useRouter } from 'next/router'
 import shopcontext from '../context/shopcontext';
 function login() {
     const context = useContext(shopcontext)
-    const { successtoast, warntoast, login, setUser } = context;
+    const { successtoast, warntoast, login, checktoken } = context;
 
     const router = useRouter()
     const [user, setuser] = useState({ email: "", password: "" })
+
     const onchange = (e) => {
         setuser({ ...user, [e.target.name]: e.target.value })
         //  console.log(user)
@@ -20,15 +21,19 @@ function login() {
         else {
             let response = await login(user)
             console.log("sign in response", response)
-            if (response.success) {
+            if (response && response.success) {
 
                 successtoast(response.msg)
                 localStorage.setItem("token", response.authtoken)
-                setUser({ email: user.email, token: response.authtoken })
                 setuser({ email: "", password: "" })
-            } else {
+                checktoken();
+                router.push('/')
+            } else if (response && !response.success) {
                 warntoast(response.msg)
-                localStorage.clear()
+            }
+            else {
+                warntoast("server error")
+
             }
         }
     }
