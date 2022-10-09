@@ -34,7 +34,7 @@ export default function Home() {
         <meta name="Italia Food Hub" content="All items are made by home chef" />
         <link rel="icon" href="/logo1.svg" />
       </Head>
-      <section className="text-gray-600 body-font">
+      <section className="text-gray-600 body-font z-0">
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-wrap -m-4">
             <div className="lg:w-1/4 md:w-1/2 p-4 w-full">

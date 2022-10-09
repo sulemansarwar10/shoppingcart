@@ -30,7 +30,7 @@ const header = () => {
 
     return (
         <div>
-            <header className="text-gray-700 body-font max-h-52 md:max-h-20">
+            <header className="text-gray-700 body-font md:max-h-16 max-h-52 mb-2 relative z-10">
                 <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center md:items-start ">
                     <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
                         <Image src="/logo1.svg" alt="Vercel Logo" width={72} height={72} />
@@ -55,7 +55,7 @@ const header = () => {
 
                             {Userdata.token && <PersonOutlineIcon className='text-5xl cursor-pointer p-2 ' onMouseOver={() => { setdropdowntoggle(true) }} />}
                             {
-                                dropdowntoggle && <div className='bg-green-300  text-center overflow-visible rounded-lg -translate-x-28' >
+                                dropdowntoggle && <div className='bg-green-300  text-center z-10 overflow-visible rounded-lg -translate-x-28' >
 
                                     <ul>
                                         <a onClick={() => router.push('/myaccount')} ><li className='hover:bg-green-600 p-3 w-36 m-3 cursor-pointer'>My Account</li></a>
