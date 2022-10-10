@@ -6,7 +6,7 @@ const addproduct = () => {
     const context = useContext(shopcontext)
     const { successtoast, warntoast, Userdata } = context;
     const router = useRouter()
-    const [product, setproduct] = useState({ name: "", img: "", category: "", price: "", disc: "", token: "" })
+    const [product, setproduct] = useState({ name: "", img: "", category: "breakfast", price: "", disc: "", token: "" })
     const onchange = (e) => {
         setproduct({ ...product, [e.target.name]: e.target.value })
     }
@@ -17,7 +17,7 @@ const addproduct = () => {
         } else {
             setproduct({ ...product, token: localStorage.getItem("token") })
         }
-    }, [])
+    }, [Userdata])
 
     const submithandle = async (e) => {
         e.preventDefault();
@@ -46,7 +46,7 @@ const addproduct = () => {
                 if (json.success) {
 
                     successtoast(json.msg)
-                    setproduct({ name: "", img: "", category: "", price: "", disc: "", })
+                    setproduct({ ...product, name: "", img: "", price: "", disc: "", })
                 } else {
                     warntoast(json.msg)
                 }
@@ -98,14 +98,20 @@ const addproduct = () => {
                             >
                                 Category
                             </label>
-                            <input
+                            <select onChange={onchange} name="category" id="category" className='w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md'>
+                                <option value="breakfast">Breakfast</option>
+                                <option value="fastfood">Fastfood</option>
+                                <option value="deals">Deals</option>
+                                <option value="others">Others</option>
+                            </select>
+                            {/* <input
                                 value={product.category} onChange={onchange}
                                 type="text"
                                 name="category"
                                 id="category"
                                 placeholder="category"
                                 className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                            />
+                            /> */}
                         </div>
                         <div className="mb-5">
                             <label

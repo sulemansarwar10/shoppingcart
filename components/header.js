@@ -37,15 +37,15 @@ const header = () => {
                         <span className="ml-3 text-xl cursor-pointer mt-2" onClick={() => router.push('/')}>ITALIA FOOD HUB</span>
                     </a>
                     <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l mt-6 md:border-gray-400	flex flex-wrap items-center text-base justify-center">
-                        <a onClick={() => router.push('/')} className="mr-5 cursor-pointer hover:text-gray-900">BreakFast</a>
-                        <a onClick={() => router.push('/')} className="mr-5 cursor-pointer hover:text-gray-900">Fast Food</a>
-                        <a onClick={() => router.push('/')} className="mr-5 cursor-pointer hover:text-gray-900">Deals</a>
-                        <a onClick={() => router.push('/')} className="mr-5 cursor-pointer hover:text-gray-900">Sides & Desserts</a>
+                        <a onClick={() => router.push('/breakfast')} className="mr-5 cursor-pointer hover:text-gray-900">BreakFast</a>
+                        <a onClick={() => router.push('/fastfood')} className="mr-5 cursor-pointer hover:text-gray-900">Fast Food</a>
+                        <a onClick={() => router.push('/deals')} className="mr-5 cursor-pointer hover:text-gray-900">Deals</a>
+                        <a onClick={() => router.push('/others')} className="mr-5 cursor-pointer hover:text-gray-900">Sides & Desserts</a>
                     </nav>
 
 
 
-                    <div className='flex  mt-4 mr-2'>
+                    <div className={`flex  mt-4 mr-2 ${dropdowntoggle ? "-mr-28" : ""}`}>
 
                         <ShoppingCartIcon onClick={() => router.push('/cart')} className='text-5xl cursor-pointer p-2 z-10' />
 
@@ -55,7 +55,7 @@ const header = () => {
 
                             {Userdata.token && <PersonOutlineIcon className='text-5xl cursor-pointer p-2 ' onMouseOver={() => { setdropdowntoggle(true) }} />}
                             {
-                                dropdowntoggle && <div className='bg-green-300  text-center z-10 overflow-visible rounded-lg -translate-x-28' >
+                                dropdowntoggle && <div className='bg-green-300  text-center z-10  rounded-lg -translate-x-28' >
 
                                     <ul>
                                         <a onClick={() => router.push('/myaccount')} ><li className='hover:bg-green-600 p-3 w-36 m-3 cursor-pointer'>My Account</li></a>
