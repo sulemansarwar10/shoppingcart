@@ -5,7 +5,7 @@ import Image from 'next/image'
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
 import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
-const footer = () => {
+const Footer = () => {
     const router = useRouter()
 
     return (
@@ -30,4 +30,4 @@ const footer = () => {
     )
 }
 
-export default footer
+export default Footer

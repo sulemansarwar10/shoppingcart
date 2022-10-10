@@ -7,7 +7,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Link from 'next/link';
 import shopcontext from '../context/shopcontext';
 
-const header = () => {
+const Header = () => {
     const router = useRouter()
     const context = useContext(shopcontext)
     const { Userdata, checktoken } = context;
@@ -74,4 +74,4 @@ const header = () => {
     )
 }
 
-export default header
+export default Header
