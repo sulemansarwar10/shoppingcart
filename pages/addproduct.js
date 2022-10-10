@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import shopcontext from '../context/shopcontext';
 
-const addproduct = () => {
+const Addproduct = () => {
     const context = useContext(shopcontext)
     const { successtoast, warntoast, Userdata } = context;
     const router = useRouter()
@@ -155,4 +155,4 @@ const addproduct = () => {
     )
 }
 
-export default addproduct
+export default Addproduct

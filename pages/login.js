@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { useRouter } from 'next/router'
 import shopcontext from '../context/shopcontext';
-function login() {
+function Login() {
     const context = useContext(shopcontext)
     const { successtoast, warntoast, login, checktoken } = context;
 
@@ -143,4 +143,4 @@ function login() {
     )
 }
 
-export default login
+export default Login

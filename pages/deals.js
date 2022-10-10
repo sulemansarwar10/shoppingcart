@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 
-const deals = () => {
+const Deals = () => {
     useEffect(() => {
         async function fetchData() {
 
@@ -29,4 +29,4 @@ const deals = () => {
     )
 }
 
-export default deals
+export default Deals

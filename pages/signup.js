@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { useRouter } from 'next/router'
 import shopcontext from '../context/shopcontext';
-function signup() {
+function Signup() {
     const context = useContext(shopcontext)
     const { successtoast, warntoast } = context;
     const router = useRouter()
@@ -184,4 +184,4 @@ function signup() {
     )
 }
 
-export default signup
+export default Signup

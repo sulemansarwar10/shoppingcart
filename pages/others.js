@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 
-const others = () => {
+const Others = () => {
     useEffect(() => {
         async function fetchData() {
 
@@ -29,4 +29,4 @@ const others = () => {
     )
 }
 
-export default others
+export default Others

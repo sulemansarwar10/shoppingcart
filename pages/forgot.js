@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import { useRouter } from 'next/router'
 import shopcontext from '../context/shopcontext';
 
-function forgot() {
+function Forgot() {
     const context = useContext(shopcontext)
     const { successtoast, warntoast } = context;
 
@@ -118,4 +118,4 @@ function forgot() {
     )
 }
 
-export default forgot
+export default Forgot

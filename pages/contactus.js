@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import shopcontext from '../context/shopcontext';
-function contactus() {
+function Contactus() {
 
     const context = useContext(shopcontext)
     const { successtoast, warntoast } = context;
@@ -93,4 +93,4 @@ function contactus() {
     )
 }
 
-export default contactus
+export default Contactus

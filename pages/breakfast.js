@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 
-const breakfast = () => {
+const Breakfast = () => {
     useEffect(() => {
         async function fetchData() {
 
@@ -29,4 +29,4 @@ const breakfast = () => {
     )
 }
 
-export default breakfast
+export default Breakfast
