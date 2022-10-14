@@ -5,7 +5,41 @@ import 'react-toastify/dist/ReactToastify.css';
 const Shopstate = (props) => {
 
   const [Userdata, setUserdata] = useState({ name: "", email: "", token: "" })
+  const [cart, setcart] = useState({})
 
+  const addtocart = (p) => {
+    let newcart = cart
+    const { name, img, price, category } = p
+    if (name in cart) {
+      newcart[name].qty = cart[name].qty + 1
+    }
+    else {
+      newcart[name] = { name, img, price, category, qty: 1 }
+
+    }
+    setcart(newcart)
+    savecart(newcart)
+  }
+  const removetocart = (p) => {
+    let newcart = cart
+    const { name, img, price, category } = p
+    if (name in cart) {
+      newcart[name].qty = cart[name].qty - 1
+    }
+    if (newcart[name].qty <= 0 && name in cart) {
+      delete newcart[name]
+
+    }
+    setcart(newcart)
+    savecart(newcart)
+  }
+  const clearcart = () => {
+    setcart({})
+    localStorage.removeItem("cart")
+  }
+  const savecart = (p) => {
+    localStorage.setItem("cart", JSON.stringify(p))
+  }
   const checktoken = async () => {
     try {
       const response = await fetch(
@@ -78,7 +112,7 @@ const Shopstate = (props) => {
   }
   return (
     <>
-      <Shopcontext.Provider value={{ successtoast, warntoast, login, Userdata, setUserdata, checktoken }}>
+      <Shopcontext.Provider value={{ successtoast, warntoast, login, Userdata, setUserdata, checktoken, addtocart, removetocart, clearcart, cart, setcart }}>
         <ToastContainer
           position="bottom-right"
           autoClose={3000}

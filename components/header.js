@@ -10,7 +10,7 @@ import shopcontext from '../context/shopcontext';
 const Header = () => {
     const router = useRouter()
     const context = useContext(shopcontext)
-    const { Userdata, checktoken } = context;
+    const { Userdata, checktoken, setcart } = context;
     const [dropdowntoggle, setdropdowntoggle] = useState(false)
     const logout = () => {
         localStorage.removeItem("token")
@@ -18,7 +18,13 @@ const Header = () => {
         checktoken();
     }
     useEffect(() => {
-
+        try {
+            if (localStorage.getItem("cart")) {
+                setcart(JSON.parse(localStorage.getItem("cart")))
+            }
+        } catch (error) {
+            localStorage.clear()
+        }
         console.log("header useeffect")
         if (localStorage.getItem("token")) {
             checktoken();
