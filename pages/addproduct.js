@@ -1,10 +1,13 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import shopcontext from '../context/shopcontext';
+import { useSelector, useDispatch } from 'react-redux'
+import { successtoast, warntoast } from '../slice/toastslice'
+import { checktoken, login, selectUser } from '../slice/userslice'
 
 const Addproduct = () => {
-    const context = useContext(shopcontext)
-    const { successtoast, warntoast, Userdata } = context;
+    const Userdata = useSelector(selectUser);
+    const dispatch = useDispatch()
+
     const router = useRouter()
     const [product, setproduct] = useState({ name: "", img: "", category: "breakfast", price: "", disc: "", token: "" })
     const onchange = (e) => {
@@ -23,7 +26,7 @@ const Addproduct = () => {
         e.preventDefault();
         console.log(product)
         if (product.name == "" || product.img == "" || product.category == "" || product.price == "" || product.disc == "") {
-            warntoast('please fill all fields')
+            dispatch(warntoast('please fill all fields'))
         }
 
         else {
@@ -45,10 +48,10 @@ const Addproduct = () => {
 
                 if (json.success) {
 
-                    successtoast(json.msg)
+                    dispatch(successtoast(json.msg))
                     setproduct({ ...product, name: "", img: "", price: "", disc: "", })
                 } else {
-                    warntoast(json.msg)
+                    dispatch(warntoast(json.msg))
                 }
             } catch (error) {
 

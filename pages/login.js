@@ -1,12 +1,14 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import shopcontext from '../context/shopcontext';
-function Login() {
-    const context = useContext(shopcontext)
-    const { successtoast, warntoast, login, checktoken } = context;
+import { useSelector, useDispatch } from 'react-redux'
+import { successtoast, warntoast } from '../slice/toastslice'
+import { checktoken, login, selectUser } from '../slice/userslice'
 
+function Login() {
+    const dispatch = useDispatch()
     const router = useRouter()
     const [user, setuser] = useState({ email: "", password: "" })
+    const Userdata = useSelector(selectUser);
 
     const onchange = (e) => {
         setuser({ ...user, [e.target.name]: e.target.value })
@@ -16,23 +18,23 @@ function Login() {
         e.preventDefault();
 
         if (user.email == "" || user.password == "") {
-            warntoast('please fill all fields')
+            dispatch(warntoast('please fill all fields'))
         }
         else {
-            let response = await login(user)
-            console.log("sign in response", response)
+            let data = await dispatch(login(user))
+            let response = data.payload
             if (response && response.success) {
 
-                successtoast(response.msg)
-                localStorage.setItem("token", response.authtoken)
+                dispatch(successtoast(response.msg))
+                localStorage.setItem("token", JSON.stringify({ token: response.authtoken }))
                 setuser({ email: "", password: "" })
-                checktoken();
+                dispatch(checktoken());
                 router.push('/')
             } else if (response && !response.success) {
-                warntoast(response.msg)
+                dispatch(warntoast(response.msg))
             }
             else {
-                warntoast("server error")
+                dispatch(warntoast("server error"))
 
             }
         }

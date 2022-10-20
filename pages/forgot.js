@@ -1,11 +1,10 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import shopcontext from '../context/shopcontext';
+import { useDispatch } from 'react-redux'
+import { successtoast, warntoast } from '../slice/toastslice'
 
 function Forgot() {
-    const context = useContext(shopcontext)
-    const { successtoast, warntoast } = context;
-
+    const dispatch = useDispatch()
     const router = useRouter()
     const [user, setuser] = useState({ email: "" })
     const onchange = (e) => {
@@ -16,7 +15,7 @@ function Forgot() {
         e.preventDefault();
 
         if (user.email == "") {
-            warntoast('please fill all fields')
+            dispatch(warntoast('please fill all fields'))
         }
         else {
             try {
@@ -36,10 +35,10 @@ function Forgot() {
                 console.log("sign in response", json)
                 if (json.success) {
 
-                    successtoast(json.msg)
+                    dispatch(successtoast(json.msg))
                     setuser({ email: "" })
                 } else {
-                    warntoast(json.msg)
+                    dispatch(warntoast(json.msg))
                 }
             } catch (error) {
 

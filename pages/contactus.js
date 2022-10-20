@@ -1,9 +1,10 @@
-import React, { useState, useContext } from 'react'
-import shopcontext from '../context/shopcontext';
-function Contactus() {
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { successtoast, warntoast } from '../slice/toastslice'
 
-    const context = useContext(shopcontext)
-    const { successtoast, warntoast } = context;
+function Contactus() {
+    const dispatch = useDispatch()
+
 
     const [user, setuser] = useState({ name: "", email: "", contact: "", message: "" })
     const onchange = (e) => {
@@ -13,7 +14,7 @@ function Contactus() {
     const submithandle = async (e) => {
         e.preventDefault();
         if (user.name == "" || user.email == "" || user.contact == "" || user.message == "") {
-            warntoast('please fill all fields')
+            dispatch(warntoast('please fill all fields'))
         }
         else {
             try {
@@ -33,10 +34,10 @@ function Contactus() {
                 console.log("sign in response", json)
                 if (json.success) {
 
-                    successtoast(json.msg)
+                    dispatch(successtoast(json.msg))
                     setuser({ name: "", email: "", contact: "", message: "" })
                 } else {
-                    warntoast(json.msg)
+                    dispatch(warntoast(json.msg))
                 }
             } catch (error) {
 

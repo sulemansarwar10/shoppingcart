@@ -1,35 +1,37 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Link from 'next/link';
-import shopcontext from '../context/shopcontext';
+import { useSelector, useDispatch } from 'react-redux'
+import { checktoken, selectUser } from '../slice/userslice'
+import { selectCart, setcart } from '../slice/cartslice'
 
 const Header = () => {
     const router = useRouter()
-    const context = useContext(shopcontext)
-    const { Userdata, checktoken, setcart } = context;
+
+    const dispatch = useDispatch()
+    const Userdata = useSelector(selectUser);
+    const cart = useSelector(selectCart).items;
+
     const [dropdowntoggle, setdropdowntoggle] = useState(false)
     const logout = () => {
         localStorage.removeItem("token")
         setdropdowntoggle(false)
-        checktoken();
+        dispatch(checktoken());
     }
     useEffect(() => {
         try {
-            if (localStorage.getItem("cart")) {
-                setcart(JSON.parse(localStorage.getItem("cart")))
+            if (localStorage.getItem("cart") && Object.keys(cart).length <= 0) {
+                dispatch(setcart(JSON.parse(localStorage.getItem("cart")).items))
             }
         } catch (error) {
             localStorage.clear()
         }
-        console.log("header useeffect")
-        if (localStorage.getItem("token")) {
-            checktoken();
-        } else {
-
+        if (localStorage.getItem("token") && !Userdata.token) {
+            dispatch(checktoken());
         }
 
     }, [])

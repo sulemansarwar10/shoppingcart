@@ -1,10 +1,13 @@
-import React, { useState, useContext, useEffect } from 'react'
-import shopcontext from '../context/shopcontext';
-
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { checktoken, selectUser } from '../slice/userslice'
+import { selectCart, addtocart } from '../slice/cartslice'
+c
 const Deals = () => {
     const [items, setitems] = useState()
-    const context = useContext(shopcontext)
-    const { addtocart } = context;
+    const dispatch = useDispatch()
+    const Userdata = useSelector(selectUser);
+    const Cartdata = useSelector(selectCart);
 
     useEffect(() => {
         async function fetchData() {

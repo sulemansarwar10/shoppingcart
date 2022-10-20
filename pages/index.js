@@ -2,8 +2,12 @@ import { useEffect } from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { useSelector, useDispatch } from 'react-redux'
+import { checktoken, selectUser } from '../slice/userslice'
 
 export default function Home() {
+  const Userdata = useSelector(selectUser);
+
   useEffect(() => {
     async function fetchData() {
 
@@ -17,7 +21,6 @@ export default function Home() {
 
         const json = await response.json(); // parses JSON response into native JavaScript objects
 
-        console.log("product response", json)
 
       } catch (error) {
 
@@ -26,6 +29,7 @@ export default function Home() {
     fetchData();
 
   }, [])
+  console.log("product response", Userdata)
 
   return (
     <div className={styles.container}>

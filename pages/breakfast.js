@@ -1,12 +1,14 @@
 import { useRouter } from 'next/router'
-import React, { useState, useContext, useEffect } from 'react'
-import shopcontext from '../context/shopcontext';
-
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { checktoken, selectUser } from '../slice/userslice'
+import { selectCart, addtocart } from '../slice/cartslice'
 const Breakfast = () => {
     const [items, setitems] = useState()
     const router = useRouter()
-    const context = useContext(shopcontext)
-    const { addtocart } = context;
+    const dispatch = useDispatch()
+    const Userdata = useSelector(selectUser);
+    const Cartdata = useSelector(selectCart);
 
     useEffect(() => {
         async function fetchData() {
@@ -20,7 +22,7 @@ const Breakfast = () => {
 
                 const json = await response.json(); // parses JSON response into native JavaScript objects
                 setitems(json.products)
-                console.log("product response", json.products)
+                console.log("product response", json.products, Userdata, Cartdata)
 
             } catch (error) {
 
@@ -51,7 +53,7 @@ const Breakfast = () => {
                                     <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">{item.disc}</h3>
                                     <p className="mt-1">Rs {item.price}</p>
                                 </div>
-                                <button className='m-3 p-2 bg-green-300 hover:bg-green-500 rounded-md' onClick={() => { addtocart(item) }}>Add to Cart</button>
+                                <button className='m-3 p-2 bg-green-300 hover:bg-green-500 rounded-md' onClick={() => { dispatch(addtocart(item)) }}>Add to Cart</button>
                             </div>
                         })}
 

@@ -1,10 +1,12 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import shopcontext from '../context/shopcontext';
+import { useSelector, useDispatch } from 'react-redux'
+import { successtoast, warntoast } from '../slice/toastslice'
+
 function Signup() {
-    const context = useContext(shopcontext)
-    const { successtoast, warntoast } = context;
     const router = useRouter()
+    const dispatch = useDispatch()
+
     const [user, setuser] = useState({ fname: "", lname: "", email: "", contact: "", password: "", cpassword: "" })
     const onchange = (e) => {
         setuser({ ...user, [e.target.name]: e.target.value })
@@ -12,10 +14,10 @@ function Signup() {
     const submithandle = async (e) => {
         e.preventDefault();
         if (user.fname == "" || user.lname == "" || user.email == "" || user.contact == "" || user.password == "" || user.cpassword == "") {
-            warntoast('please fill all fields')
+            dispatch(warntoast('please fill all fields'))
         }
         else if (user.password !== user.cpassword) {
-            warntoast('Passwards are not matching')
+            dispatch(warntoast('Passwards are not matching'))
 
         } else {
 
@@ -36,10 +38,10 @@ function Signup() {
                 console.log("sign in response", json)
                 if (json.success) {
 
-                    successtoast(json.msg)
+                    dispatch(successtoast(json.msg))
                     setuser({ fname: "", lname: "", email: "", contact: "", password: "", cpassword: "" })
                 } else {
-                    warntoast(json.msg)
+                    dispatch(warntoast(json.msg))
                 }
             } catch (error) {
 

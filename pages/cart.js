@@ -1,9 +1,14 @@
-import React, { useState, useContext, useEffect } from 'react'
-import shopcontext from '../context/shopcontext';
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { checktoken, selectUser } from '../slice/userslice'
+import { selectCart, addtocart, removetocart } from '../slice/cartslice'
 
 const Cart = () => {
-    const context = useContext(shopcontext)
-    const { cart, addtocart, removetocart } = context;
+
+    const dispatch = useDispatch()
+
+    const cart = useSelector(selectCart).items;
+
     console.log("cart", cart)
     if (!cart)
         return (
@@ -20,9 +25,9 @@ const Cart = () => {
                             <h3>Rs. {cart[item].price * cart[item].qty}</h3>
                         </div>
                         <div className='mt-8 flex items-center '>
-                            <button className='mx-4 bg-green-300 p-2 rounded-lg' onClick={() => { removetocart(cart[item]) }}>-</button>
+                            <button className='mx-4 bg-green-300 p-2 rounded-lg' onClick={() => { dispatch(removetocart(cart[item])) }}>-</button>
                             <h3>{cart[item].qty}</h3>
-                            <button className='mx-4 bg-green-300 p-2 rounded-lg' onClick={() => { addtocart(cart[item]) }}>+</button>
+                            <button className='mx-4 bg-green-300 p-2 rounded-lg' onClick={() => { dispatch(addtocart(cart[item])) }}>+</button>
 
                         </div>
 

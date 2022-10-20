@@ -1,16 +1,19 @@
 import '../styles/globals.css'
-import Shopstate from '../context/Shopstate'
 import Footer from '../components/footer'
 import Header from '../components/header'
+import { store } from '../store'
+import { Provider } from 'react-redux'
+import { ToastContainer } from 'react-toastify';
 
 function MyApp({ Component, pageProps }) {
 
   return <>
-    <Shopstate>
+    <Provider store={store}>
+      
       <Header />
       <Component {...pageProps} />
       <Footer />
-    </Shopstate>
+    </Provider>
   </>
 }
 
