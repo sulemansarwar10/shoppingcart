@@ -38,7 +38,7 @@ const Header = () => {
 
     return (
         <div>
-            <header className="text-gray-700 body-font md:max-h-16 max-h-52 mb-2 relative z-10">
+            <header className="text-gray-700 body-font md:max-h-16 max-h-52 mb-10 relative z-10">
                 <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center md:items-start ">
                     <a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
                         <Image src="/logo1.svg" alt="Vercel Logo" width={72} height={72} />
