@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux'
@@ -55,13 +54,13 @@ const Header = () => {
 
                     <div className={`flex  mt-4 mr-2 ${dropdowntoggle ? "-mr-28" : ""}`}>
 
-                        <ShoppingCartIcon onClick={() => router.push('/cart')} className='text-5xl cursor-pointer p-2 z-10' />
+                        <ShoppingCartIcon onClick={() => router.push('/cart')} className='cursor-pointer p-2 z-10' sx={{ fontSize: 50 }}/>
 
 
                         <div className=' ' onMouseLeave={() => { setdropdowntoggle(false) }}>
                             {!Userdata.token && <Link href='/login'><button className='bg-green-400 rounded-md text-sm p-2 mt-1'>Login</button></Link>}
 
-                            {Userdata.token && <PersonOutlineIcon className='text-5xl cursor-pointer p-2 ' onMouseOver={() => { setdropdowntoggle(true) }} />}
+                            {Userdata.token && <PersonOutlineIcon className='cursor-pointer p-2 ' sx={{ fontSize: 50 }} onMouseOver={() => { setdropdowntoggle(true) }} />}
                             {
                                 dropdowntoggle && <div className='bg-green-300  text-center z-10  rounded-lg -translate-x-28' >
 
