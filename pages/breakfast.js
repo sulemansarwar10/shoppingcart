@@ -40,9 +40,9 @@ const Breakfast = () => {
     }
     else {
         return (<div>
-            <section className="text-gray-600 body-font z-0">
+            <section className="text-gray-600 body-font z-0 items-center">
                 <div className="container px-5 py-24 mx-auto">
-                    <div className="flex flex-wrap -m-4">
+                    <div className="flex flex-wrap -m-4 justify-evenly">
 
                         {items.map((item) => {
                             return <div key={item.name} className="lg:w-1/4 md:w-1/2 p-4 w-full text-center" >
