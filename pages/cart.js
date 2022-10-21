@@ -10,9 +10,9 @@ const Cart = () => {
     const cart = useSelector(selectCart).items;
 
     console.log("cart", cart)
-    if (!cart)
+    if (Object.keys(cart).length == 0)
         return (
-            <div className='grid place-content-center font-extrabold min-w-full min-h-screen'>{"Sorry! There are no items are available in this category"} </div>
+            <div className='grid place-content-center font-extrabold min-w-full min-h-screen'>{"Your Cart is Empty"} </div>
         )
     else {
         return (

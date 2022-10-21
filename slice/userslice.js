@@ -44,6 +44,8 @@ export const checktoken = createAsyncThunk(
             );
 
             const json = await response.json(); // parses JSON response into native JavaScript objects
+            console.log("signinslice", json)
+         
             return json;
         } catch (error) {
 

@@ -12,7 +12,7 @@ export const cartSlice = createSlice({
             console.log("addtocart")
             let newcart = state.items
             const { name, img, price, category } = action.payload
-            if (name in state.items) {
+            if (state.items && name in state.items) {
                 newcart[name].qty = state.items[name].qty + 1
             }
             else {
@@ -25,7 +25,7 @@ export const cartSlice = createSlice({
         removetocart: (state, action) => {
             let newcart = state.items
             const { name, img, price, category } = action.payload
-            if (name in state.items) {
+            if (state.items && name in state.items) {
                 newcart[name].qty = state.items[name].qty - 1
             }
             if (newcart[name].qty <= 0 && name in state.items) {
