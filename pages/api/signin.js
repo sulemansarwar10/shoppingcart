@@ -8,30 +8,35 @@ const handler = async (req, res) => {
 
     if (req.method === 'POST') {
 
+        try {
 
-        let user = await User.findOne({ email: req.body.email })
-        if (!user) {
-            return res.status(400).json({ success: false, msg: "sorry! this email is not registered" })
-        }
-        //adding salt to the password to secure and generating hash of password
-        const secpass = await CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY).toString(CryptoJS.enc.Utf8);;
-
-        if (secpass === req.body.password) {
-            const data = {
-                user: {
-                    name: user.fname,
-                    email: user.email
-                }
+            let user = await User.findOne({ email: req.body.email })
+            if (!user) {
+                return res.status(400).json({ success: false, msg: "sorry! this email is not registered" })
             }
-            const authtoken = jwt.sign(data, process.env.JWT_SECRET, { expiresIn: '1d' });
+            //adding salt to the password to secure and generating hash of password
+            const secpass = await CryptoJS.AES.decrypt(user.password, process.env.SECRET_KEY).toString(CryptoJS.enc.Utf8);;
 
-            return res.status(200).json({ success: true, msg: "Login Successfully", authtoken })
+            if (secpass === req.body.password) {
+                const data = {
+                    user: {
+                        name: user.fname,
+                        email: user.email
+                    }
+                }
+                const authtoken = jwt.sign(data, process.env.JWT_SECRET, { expiresIn: '1d' });
 
-        } else {
-            return res.status(400).json({ success: false, msg: "password in correct" })
+                return res.status(200).json({ success: true, msg: "Login Successfully", authtoken })
+
+            } else {
+                return res.status(400).json({ success: false, msg: "password in correct" })
+
+            }
+
+        } catch (error) {
+            return res.status(400).json({ success: false, msg: "some error in server", error })
 
         }
-
 
     } else {
         return res.status(400).json({ success: false, msg: "this method is not allowed" })
