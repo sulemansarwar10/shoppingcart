@@ -23,6 +23,7 @@ function Login() {
         else {
             let data = await dispatch(login(user))
             let response = data.payload
+            console.log("signinpage", data)
             if (response && response.success) {
 
                 dispatch(successtoast(response.msg))

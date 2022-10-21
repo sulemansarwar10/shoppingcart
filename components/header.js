@@ -54,7 +54,7 @@ const Header = () => {
 
                     <div className={`flex  mt-4 mr-2 ${dropdowntoggle ? "-mr-28" : ""}`}>
 
-                        <ShoppingCartIcon onClick={() => router.push('/cart')} className='cursor-pointer p-2 z-10' sx={{ fontSize: 50 }}/>
+                        <ShoppingCartIcon onClick={() => router.push('/cart')} className='cursor-pointer p-2 z-10' sx={{ fontSize: 50 }} />
 
 
                         <div className=' ' onMouseLeave={() => { setdropdowntoggle(false) }}>

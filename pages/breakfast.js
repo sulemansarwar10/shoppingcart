@@ -23,8 +23,6 @@ const Breakfast = () => {
 
                 const json = await response.json(); // parses JSON response into native JavaScript objects
                 setitems(json.products)
-                console.log("product response", json.products, Userdata, Cartdata)
-
             } catch (error) {
 
             }
@@ -42,7 +40,7 @@ const Breakfast = () => {
         return (<div>
             <section className="text-gray-600 body-font z-0 items-center">
                 <div className="container px-5 py-24 mx-auto">
-                    <div className="flex flex-wrap -m-4 justify-evenly">
+                    <div className="flex flex-wrap -m-4 justify-evenly items-end">
 
                         {items.map((item) => {
                             return <div key={item.name} className="lg:w-1/4 md:w-1/2 p-4 w-full text-center" >
