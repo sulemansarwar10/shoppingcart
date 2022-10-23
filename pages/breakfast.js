@@ -15,13 +15,14 @@ const Breakfast = () => {
         async function fetchData() {
             try {
                 const response = await fetch(
-                    `/api/breakfast`,
+                    `/api/products/breakfast`,
                     {
                         method: 'GET'
                     }
                 );
 
                 const json = await response.json(); // parses JSON response into native JavaScript objects
+              console.log(json,"breakfast")
                 setitems(json.products)
             } catch (error) {
 

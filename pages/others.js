@@ -15,7 +15,7 @@ const Others = () => {
 
             try {
                 const response = await fetch(
-                    `/api/others`,
+                    `/api/products/others`,
                     {
                         method: 'GET'
                     }

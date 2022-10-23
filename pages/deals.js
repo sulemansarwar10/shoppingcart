@@ -15,7 +15,7 @@ const Deals = () => {
 
             try {
                 const response = await fetch(
-                    `/api/deals`,
+                    `/api/products/deals`,
                     {
                         method: 'GET'
                     }

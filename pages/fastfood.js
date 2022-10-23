@@ -15,7 +15,7 @@ const Fastfood = () => {
 
             try {
                 const response = await fetch(
-                    `/api/fastfood`,
+                    `/api/products/fastfood`,
                     {
                         method: 'GET'
                     }
