@@ -32,7 +32,7 @@ const handler = async (req, res) => {
                         email: user.email
                     }
                 }
-                const authtoken = jwt.sign(data, process.env.JWT_SECRET, { expiresIn: '1d' });
+                const authtoken = await jwt.sign(data, process.env.JWT_SECRET, { expiresIn: '1d' });
 
                 return res.status(200).json({ success: true, msg: "Login Successfully", authtoken })
 
