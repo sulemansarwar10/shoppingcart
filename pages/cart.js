@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { checktoken, selectUser } from '../slice/userslice'
-import { selectCart, addtocart, removetocart } from '../slice/cartslice'
+import { selectCart, addtocart, removetocart, subtotalcart } from '../slice/cartslice'
 
 const Cart = () => {
 
     const dispatch = useDispatch()
 
     const cart = useSelector(selectCart).items;
-
+    const subtotal = useSelector(selectCart).subtotal;
     console.log("cart", cart)
     if (Object.keys(cart).length == 0)
         return (
@@ -33,6 +33,12 @@ const Cart = () => {
 
                     </div>
                 })}
+                <div className='font-bold border-green-500 border-t-2 flex justify-between'>
+
+                    <div >Subtotal:</div>
+                    <div>Rs. {subtotal}</div>
+                </div>
+                <button className='m-3 p-2 bg-green-300 hover:bg-green-500 rounded-md' onClick={() => { dispatch(subtotalcart()) }}>checkout</button>
             </div>
         )
     }

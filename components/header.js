@@ -7,13 +7,14 @@ import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux'
 import { checktoken, selectUser } from '../slice/userslice'
 import { selectCart, setcart } from '../slice/cartslice'
-
+import Badge from '@mui/material/Badge';
 const Header = () => {
     const router = useRouter()
 
     const dispatch = useDispatch()
     const Userdata = useSelector(selectUser);
     const cart = useSelector(selectCart).items;
+    const titems = useSelector(selectCart).totalitems;
 
     const [dropdowntoggle, setdropdowntoggle] = useState(false)
     const logout = () => {
@@ -54,11 +55,12 @@ const Header = () => {
 
                     <div className={`flex  mt-4 mr-2 ${dropdowntoggle ? "-mr-28" : ""}`}>
 
-                        <ShoppingCartIcon onClick={() => router.push('/cart')} className='cursor-pointer p-2 z-10' sx={{ fontSize: 50 }} />
-
+                        <Badge badgeContent={titems} color="secondary" max={99}>
+                            <ShoppingCartIcon onClick={() => router.push('/cart')} className='cursor-pointer p-2 z-10 ' sx={{ fontSize: 50 }} />
+                        </Badge>
 
                         <div className=' ' onMouseLeave={() => { setdropdowntoggle(false) }}>
-                            {!Userdata.token && <Link href='/login'><button className='bg-green-400 rounded-md text-sm p-2 mt-1'>Login</button></Link>}
+                            {!Userdata.token && <Link href='/login'><button className='bg-green-400 rounded-md text-sm p-2 mt-1 ml-3'>Login</button></Link>}
 
                             {Userdata.token && <PersonOutlineIcon className='cursor-pointer p-2 ' sx={{ fontSize: 50 }} onMouseOver={() => { setdropdowntoggle(true) }} />}
                             {
