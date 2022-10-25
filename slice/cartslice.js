@@ -1,17 +1,41 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     items: {},
     totalitems: 0,
     subtotal: 0,
+    status: 'idle'
 }
 
+export const checkout = createAsyncThunk(
+    'cart/checkout',
+    async (action) => {
+        try {
+            console.log("checkout", action)
+            const response = await fetch(
+                `/api/order`,
+                {
+                    body: JSON.stringify(action),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    method: 'POST'
+                }
+            );
+            const json = await response.json();
+            console.log("checkoutjson", json)
+            return json;
+        } catch (error) {
+
+        }
+
+    }
+);
 export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
         addtocart: (state, action) => {
-            console.log("addtocart")
             let newcart = state.items
             const { name, img, price, category } = action.payload
             if (state.items && name in state.items) {
@@ -52,6 +76,17 @@ export const cartSlice = createSlice({
             state.subtotal = subtotalcart(state.items)
             state.totalitems = Object.keys(state.items).length
         },
+        extraReducers: (builder) => {
+            builder
+                .addCase(checkout.pending, (state) => {
+                    state.status = 'loading';
+                })
+                .addCase(checkout.fulfilled, (state, action) => {
+                    console.log("checkout1")
+                    state.status = 'idle';
+
+                })
+        }
 
     },
 })
@@ -60,7 +95,6 @@ const subtotalcart = (item) => {
     const currentValue = item
     Object.keys(currentValue).map((item, key) => {
         total = total + parseInt(currentValue[item].price * currentValue[item].qty)
-        console.log("subtotal", currentValue, total)
     })
     return total
 

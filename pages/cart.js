@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { checktoken, selectUser } from '../slice/userslice'
-import { selectCart, addtocart, removetocart, subtotalcart } from '../slice/cartslice'
+import { selectCart, addtocart, removetocart, clearcart, checkout } from '../slice/cartslice'
 
 const Cart = () => {
 
@@ -38,7 +38,9 @@ const Cart = () => {
                     <div >Subtotal:</div>
                     <div>Rs. {subtotal}</div>
                 </div>
-                <button className='m-3 p-2 bg-green-300 hover:bg-green-500 rounded-md' onClick={() => { dispatch(subtotalcart()) }}>checkout</button>
+                <button className='m-3 p-2 bg-green-300 hover:bg-green-500 rounded-md' onClick={() => { dispatch(checkout(cart)) }}>checkout</button>
+                <button className='m-3 p-2 bg-green-300 hover:bg-green-500 rounded-md' onClick={() => { dispatch(clearcart()) }}>Clear Cart</button>
+
             </div>
         )
     }
