@@ -4,12 +4,12 @@ import Header from '../components/header'
 import { store } from '../store'
 import { Provider } from 'react-redux'
 import { ToastContainer } from 'react-toastify';
-
+import 'react-toastify/dist/ReactToastify.css';
 function MyApp({ Component, pageProps }) {
 
   return <>
     <Provider store={store}>
-      {/* <ToastContainer
+      <ToastContainer
         position="bottom-right"
         autoClose={3000}
         hideProgressBar={false}
@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }) {
         draggable
         pauseOnHover={false}
         theme="light"
-      /> */}
+      />
       <Header />
       <Component {...pageProps} />
       <Footer />
