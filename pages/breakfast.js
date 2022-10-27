@@ -4,33 +4,33 @@ import { useSelector, useDispatch } from 'react-redux'
 import { checktoken, selectUser } from '../slice/userslice'
 import { selectCart, addtocart } from '../slice/cartslice'
 import Image from 'next/image'
-const Breakfast = () => {
-    const [items, setitems] = useState()
+const Breakfast = ({ items }) => {
+    // const [items, setitems] = useState()
     const router = useRouter()
     const dispatch = useDispatch()
     const Userdata = useSelector(selectUser);
     const Cartdata = useSelector(selectCart);
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await fetch(
-                    `/api/products/breakfast`,
-                    {
-                        method: 'GET'
-                    }
-                );
+    // useEffect(() => {
+    //     async function fetchData() {
+    //         try {
+    //             const response = await fetch(
+    //                 `/api/products/breakfast`,
+    //                 {
+    //                     method: 'GET'
+    //                 }
+    //             );
 
-                const json = await response.json(); // parses JSON response into native JavaScript objects
-              console.log(json,"breakfast")
-                setitems(json.products)
-            } catch (error) {
+    //             const json = await response.json(); // parses JSON response into native JavaScript objects
+    //             console.log(json, "breakfast")
+    //             setitems(json.products)
+    //         } catch (error) {
 
-            }
-        }
-        fetchData();
+    //         }
+    //     }
+    //     fetchData();
 
-    }, [])
+    // }, [])
     if (!items || items == 0) {
 
         return (
@@ -66,3 +66,18 @@ const Breakfast = () => {
 }
 
 export default Breakfast
+
+export async function getStaticProps() {
+    // Call an external API endpoint to get posts
+    const response = await fetch(`${process.env.HOST_URL}/api/products/breakfast`);
+
+    const items = await response.json(); // parses JSON response into native JavaScript objects
+
+    // By returning { props: { posts } }, the Blog component
+    // will receive `posts` as a prop at build time
+    return {
+        props: {
+            items: items.products,
+        },
+    }
+}

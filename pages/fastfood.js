@@ -4,33 +4,33 @@ import { checktoken, selectUser } from '../slice/userslice'
 import { selectCart, addtocart } from '../slice/cartslice'
 import Image from 'next/image'
 
-const Fastfood = () => {
-    const [items, setitems] = useState()
+const Fastfood = ({ items }) => {
+    //    const [items, setitems] = useState()
     const dispatch = useDispatch()
     const Userdata = useSelector(selectUser);
     const Cartdata = useSelector(selectCart);
 
-    useEffect(() => {
-        async function fetchData() {
+    // useEffect(() => {
+    //     async function fetchData() {
 
-            try {
-                const response = await fetch(
-                    `/api/products/fastfood`,
-                    {
-                        method: 'GET'
-                    }
-                );
+    //         try {
+    //             const response = await fetch(
+    //                 `/api/products/fastfood`,
+    //                 {
+    //                     method: 'GET'
+    //                 }
+    //             );
 
-                const json = await response.json(); // parses JSON response into native JavaScript objects
-                setitems(json.products)
+    //             const json = await response.json(); // parses JSON response into native JavaScript objects
+    //             setitems(json.products)
 
-            } catch (error) {
+    //         } catch (error) {
 
-            }
-        }
-        fetchData();
+    //         }
+    //     }
+    //     fetchData();
 
-    }, [])
+    // }, [])
 
 
     if (!items || items == 0) {
@@ -68,3 +68,18 @@ const Fastfood = () => {
 }
 
 export default Fastfood
+
+export async function getStaticProps() {
+    // Call an external API endpoint to get posts
+    const response = await fetch(`${process.env.HOST_URL}/api/products/fastfood`);
+
+    const items = await response.json(); // parses JSON response into native JavaScript objects
+
+    // By returning { props: { posts } }, the Blog component
+    // will receive `posts` as a prop at build time
+    return {
+        props: {
+            items: items.products,
+        },
+    }
+}

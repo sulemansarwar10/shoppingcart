@@ -6,34 +6,30 @@ import { useSelector, useDispatch } from 'react-redux'
 import { checktoken, selectUser } from '../slice/userslice'
 import { selectCart, addtocart } from '../slice/cartslice'
 
-export default function Home() {
-  const [items, setitems] = useState()
+export default function Home({ items }) {
+  //  const [items, setitems] = useState()
   const dispatch = useDispatch()
   const Userdata = useSelector(selectUser);
   const Cartdata = useSelector(selectCart);
 
-  useEffect(() => {
-    async function fetchData() {
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     try {
+  //       const response = await fetch(
+  //         `/api/allproducts`,
+  //         {
+  //           method: 'GET'
+  //         }
+  //       );
+  //       const json = await response.json(); // parses JSON response into native JavaScript objects
+  //       setitems(json.products)
+  //     } catch (error) {
+  //     }
+  //   }
+  //   fetchData();
+  // }, [])
 
-      try {
-        const response = await fetch(
-          `/api/allproducts`,
-          {
-            method: 'GET'
-          }
-        );
-
-        const json = await response.json(); // parses JSON response into native JavaScript objects
-        setitems(json.products)
-      } catch (error) {
-
-      }
-    }
-    fetchData();
-
-  }, [])
-
-  if (!items || items == 0) {
+  if (!items) {
 
     return (
       <div className='grid place-content-center font-extrabold min-w-full min-h-screen'>{"Sorry! There are no items are available in this category"} </div>
@@ -65,4 +61,21 @@ export default function Home() {
     </div>)
   }
 
+}
+
+
+
+export async function getStaticProps() {
+  // Call an external API endpoint to get posts
+  const response = await fetch(`${process.env.HOST_URL}/api/allproducts`);
+
+  const items = await response.json(); // parses JSON response into native JavaScript objects
+
+  // By returning { props: { posts } }, the Blog component
+  // will receive `posts` as a prop at build time
+  return {
+    props: {
+      items: items.products,
+    },
+  }
 }
