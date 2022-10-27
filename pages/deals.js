@@ -67,7 +67,7 @@ const Deals = ({ items }) => {
 
 export default Deals
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     // Call an external API endpoint to get posts
     const response = await fetch(`${process.env.HOST_URL || "http://localhost:3000"}/api/products/deals`);
 
