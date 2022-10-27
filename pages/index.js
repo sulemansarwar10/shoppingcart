@@ -67,7 +67,7 @@ export default function Home({ items }) {
 
 export async function getStaticProps() {
   // Call an external API endpoint to get posts
-  const response = await fetch(`${process.env.HOST_URL}/api/allproducts`);
+  const response = await fetch(`${process.env.HOST_URL||"http://localhost:3000"}/api/allproducts`);
 
   const items = await response.json(); // parses JSON response into native JavaScript objects
 
