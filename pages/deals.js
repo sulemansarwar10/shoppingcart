@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { checktoken, selectUser } from '../slice/userslice'
 import { selectCart, addtocart } from '../slice/cartslice'
 import Image from 'next/image'
+import mongoose from "mongoose";
+import Product from '../models/product';
 
 const Deals = ({ items }) => {
     //    const [items, setitems] = useState()
@@ -68,16 +70,13 @@ const Deals = ({ items }) => {
 export default Deals
 
 export async function getServerSideProps() {
-    // Call an external API endpoint to get posts
-    const response = await fetch(`${process.env.HOST_URL || "http://localhost:3000"}/api/products/deals`);
-
-    const items = await response.json(); // parses JSON response into native JavaScript objects
-
-    // By returning { props: { posts } }, the Blog component
-    // will receive `posts` as a prop at build time
+    if (!mongoose.connections[0].readyState) {
+        await mongoose.connect(process.env.MONGO_URI)
+    }
+    let products = await Product.find({ category: "deals" })
     return {
         props: {
-            items: items.products,
+            items: JSON.parse(JSON.stringify(products)),
         },
     }
 }

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import Head from 'next/head'
+import mongoose from "mongoose";
+import Product from '../models/product';
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { useSelector, useDispatch } from 'react-redux'
@@ -66,16 +68,13 @@ export default function Home({ items }) {
 
 
 export async function getServerSideProps() {
-  // Call an external API endpoint to get posts
-  const response = await fetch(`${process.env.HOST_URL || "http://localhost:3000"}/api/allproducts`);
-
-  const items = await response.json(); // parses JSON response into native JavaScript objects
-
-  // By returning { props: { posts } }, the Blog component
-  // will receive `posts` as a prop at build time
+  if (!mongoose.connections[0].readyState) {
+    await mongoose.connect(process.env.MONGO_URI)
+  }
+  let products = await Product.find({})
   return {
     props: {
-      items: items.products,
+      items: JSON.parse(JSON.stringify(products)),
     },
   }
 }
