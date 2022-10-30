@@ -2,39 +2,129 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { checktoken, selectUser } from '../slice/userslice'
 import { useRouter } from 'next/router'
-import mongoose from "mongoose";
-import Order from '../models/order'
+import { useState } from 'react'
 const Orders = ({ orders }) => {
     const dispatch = useDispatch()
     const router = useRouter()
     const Userdata = useSelector(selectUser);
+    const [order, setorder] = useState([])
     useEffect(() => {
         if (!localStorage.getItem("token")) {
             router.push('/')
         }
+        const getorder = async () => {
+            try {
+                const response = await fetch(
+                    `/api/orders/order`,
+                    {
+                        body: JSON.stringify(Userdata.email),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        method: 'POST'
+                    }
+                );
+
+                const json = await response.json(); // parses JSON response into native JavaScript objects
+                console.log("order", json)
+                setorder(json.Orders)
+
+            } catch (error) {
+
+            }
+
+        }
+        if (Userdata.email)
+            getorder()
     }, [Userdata])
 
-    if (!orders) {
+    if (!order) {
         return (
             <div className='grid place-content-center font-extrabold min-w-full min-h-screen'>{"Sorry! There are no items are available in this category"} </div>
         )
     } else {
         return (
-            <div className='grid place-content-center font-extrabold min-w-full min-h-screen'>{orders[0].email} </div>
+
+            <div className='mt-28'>
+
+                <div className="bg-white p-8 rounded-md w-full">
+
+                    <div>
+                        <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                            <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                                <table className="min-w-full leading-normal">
+                                    <thead>
+                                        <tr>
+                                            <th
+                                                className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Orderid
+                                            </th>
+                                            <th
+                                                className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                products
+                                            </th>
+                                            <th
+                                                className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Created at
+                                            </th>
+                                            <th
+                                                className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Price
+                                            </th>
+                                            <th
+                                                className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Status
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {order.map((od) => {
+                                            return (
+                                                <tr key={od.orderid}>
+                                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                        <div className="flex items-center">
+                                                            <div className="ml-3">
+                                                                <p className="text-gray-900 whitespace-no-wrap">
+                                                                    {od.orderid}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                        <p className="text-gray-900 whitespace-no-wrap">{Object.keys(od.items)}</p>
+                                                    </td>
+                                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                        <p className="text-gray-900 whitespace-no-wrap">
+                                                            {new Date(od.createdAt).toString().slice(0, 15)}
+                                                        </p>
+                                                    </td>
+                                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                        <p className="text-gray-900 whitespace-no-wrap">
+                                                            {od.totalprice}
+                                                        </p>
+                                                    </td>
+                                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                        <span
+                                                            className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                                            <span aria-hidden
+                                                                className="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                                                            <span className="relative">{od.deliverystatus}</span>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         )
     }
 }
 
 export default Orders
-
-export async function getServerSideProps() {
-    if (!mongoose.connections[0].readyState) {
-        await mongoose.connect(process.env.MONGO_URI)
-    }
-    let ord = await Order.find({ email: Userdata.email })
-    return {
-        props: {
-            orders: JSON.parse(JSON.stringify(ord)),
-        },
-    }
-}

@@ -34,7 +34,7 @@ const handler = async (req, res) => {
                 else if (!await User.findOne({ email: orderinfo.email })) {
                     email = orderinfo.email
                 }
-                let id = (new Date).toISOString().replace(/[^\d]/g, '').concat(String(Math.floor(Math.random() * 899) + 100))
+                let id = (new Date).toISOString().replace(/[^\d]/g, '').concat(String(Math.floor(Math.random() * 89999) + 10000))
                 let u = new Order({
                     orderid: id,
                     email: email,

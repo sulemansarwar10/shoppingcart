@@ -8,7 +8,7 @@ import { selectCart, addtocart, removetocart, clearcart, checkout, setorderinfo,
 const Cart = () => {
     const router = useRouter()
     const dispatch = useDispatch()
-    const [orderinfo, setOrderinfo] = useState({ fname: "", lname: "", email: "", contact: "", address: "" })
+    const [orderinfo, setOrderinfo] = useState({ fname: "", lname: "", demail: "", dcontact: "", daddress: "" })
     const cart = useSelector(selectCart).items;
     const Userdata = useSelector(selectUser);
     const [disable, setdisable] = useState(true)
@@ -18,7 +18,7 @@ const Cart = () => {
     }
     const submithandle = async (e) => {
         e.preventDefault();
-        if (orderinfo.fname == "" || orderinfo.lname == "" || orderinfo.email == "" || orderinfo.contact == "" || orderinfo.address == "") {
+        if (orderinfo.fname == "" || orderinfo.lname == "" || orderinfo.demail == "" || orderinfo.dcontact == "" || orderinfo.daddress == "") {
             dispatch(warntoast('please fill all fields'))
         }
         else {
@@ -32,7 +32,7 @@ const Cart = () => {
             if (response && response.payload.success) {
 
                 dispatch(successtoast(response.payload.msg))
-                setOrderinfo({ fname: "", lname: "", email: "", contact: "", address: "" })
+                setOrderinfo({ fname: "", lname: "", demail: "", dcontact: "", daddress: "" })
                 dispatch(clearcart())
                 router.push('/')
             } else if (response && !response.payload.success) {
@@ -63,22 +63,22 @@ const Cart = () => {
 
                     <div>
                         <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Phone number</label>
-                        <input onChange={onchange} value={orderinfo.contact} type="tel" name="contact" id="contact" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="123-45-678" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" />
+                        <input onChange={onchange} value={orderinfo.dcontact} type="tel" name="dcontact" id="dcontact" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="123-45-678" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" />
                     </div>
                 </div>
                 <div className="mb-6">
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email address</label>
-                    <input onChange={onchange} value={orderinfo.email} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="john.doe@company.com" />
+                    <input onChange={onchange} value={orderinfo.demail} type="email" name="demail" id="demail" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="john.doe@company.com" />
                 </div>
                 <div>
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Address</label>
-                    <textarea onChange={onchange} value={orderinfo.address} type="text" name="address" id="address" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Flowbite" />
+                    <textarea onChange={onchange} value={orderinfo.daddress} type="text" name="daddress" id="daddress" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Flowbite" />
                 </div>
 
                 <div>
                     <label className="block mt-2 text-2xl font-medium text-gray-900 dark:text-gray-300">Your Cart</label>
                     {Object.keys(cart).map((item, key) => {
-                        return <div key={key} className="m-7 flex justify-around border-green-500 border-4">
+                        return <div key={key} className="m-7 flex justify-around md:border-green-500 md:border-4">
                             <img src={cart[item].img} className="w-28 h-28" />
                             <div className='mt-5'>
                                 <h1 className='font-extrabold'>{cart[item].name}</h1>
