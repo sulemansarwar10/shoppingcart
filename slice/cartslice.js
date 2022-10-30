@@ -4,18 +4,20 @@ const initialState = {
     items: {},
     totalitems: 0,
     subtotal: 0,
-    status: 'idle'
+    orderinfo: {},
+    status: 'idle',
+    token: ""
 }
 
 export const checkout = createAsyncThunk(
     'cart/checkout',
-    async (action) => {
+    async (action, { getState }) => {
         try {
-            console.log("checkout", action)
+            const state = getState().cart
             const response = await fetch(
-                `/api/order`,
+                `/api/checkout`,
                 {
-                    body: JSON.stringify(action),
+                    body: JSON.stringify(state),
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -23,7 +25,6 @@ export const checkout = createAsyncThunk(
                 }
             );
             const json = await response.json();
-            console.log("checkoutjson", json)
             return json;
         } catch (error) {
 
@@ -49,6 +50,7 @@ export const cartSlice = createSlice({
             localStorage.setItem("cart", JSON.stringify(state))
             state.subtotal = subtotalcart(state.items)
             state.totalitems = Object.keys(state.items).length
+
         },
         removetocart: (state, action) => {
             let newcart = state.items
@@ -76,13 +78,21 @@ export const cartSlice = createSlice({
             state.subtotal = subtotalcart(state.items)
             state.totalitems = Object.keys(state.items).length
         },
+        setorderinfo: (state, action) => {
+            state.orderinfo = action.payload
+        },
+        settoken: (state, action) => {
+            state.token = action.payload
+        },
         extraReducers: (builder) => {
             builder
                 .addCase(checkout.pending, (state) => {
+
+
+                    // state.token = action.payload
                     state.status = 'loading';
                 })
                 .addCase(checkout.fulfilled, (state, action) => {
-                    console.log("checkout1")
                     state.status = 'idle';
 
                 })
@@ -100,6 +110,6 @@ const subtotalcart = (item) => {
 
 }
 // Action creators are generated for each case reducer function
-export const { addtocart, removetocart, clearcart, savecart, setcart } = cartSlice.actions
+export const { addtocart, removetocart, clearcart, savecart, setcart, setorderinfo, settoken } = cartSlice.actions
 export const selectCart = (state) => state.cart;
 export default cartSlice.reducer

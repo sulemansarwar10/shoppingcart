@@ -150,6 +150,13 @@ function Signup() {
                                             />
                                         </div>
                                     </div>
+                                    <div className="flex items-start mb-6 mt-4">
+                                        <div className="flex items-center h-5 ">
+                                            <input id="remember" type="checkbox" value="" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" required />
+                                        </div>
+                                        <label className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">I agree with the <a href="#" className="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label>
+                                    </div>
+
                                     <div className="mb-6 text-center">
                                         <button
                                             className="w-full px-4 py-2 font-bold text-white bg-blue-500 rounded-full hover:bg-blue-700 focus:outline-none focus:shadow-outline"
