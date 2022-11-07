@@ -34,7 +34,7 @@ const Cart = () => {
                 dispatch(successtoast(response.payload.msg))
                 setOrderinfo({ fname: "", lname: "", demail: "", dcontact: "", daddress: "" })
                 dispatch(clearcart())
-                router.push('/')
+                router.push(`/order?id=${response.payload.order.orderid}`)
             } else if (response && !response.payload.success) {
                 dispatch(warntoast(response.payload.msg))
             }

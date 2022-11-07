@@ -44,7 +44,7 @@ const handler = async (req, res) => {
                 })
                 let p = await u.save();
                 console.log("order", id, p)
-                return res.status(200).json({ success: true, msg: "Order Placed Successfully" })
+                return res.status(200).json({ success: true, msg: "Order Placed Successfully", order: p })
 
             } catch (error) {
                 return res.status(401).send({ success: false, msg: "Please authenticate using valid token" })

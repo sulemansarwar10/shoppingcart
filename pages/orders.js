@@ -15,7 +15,7 @@ const Orders = ({ orders }) => {
         const getorder = async () => {
             try {
                 const response = await fetch(
-                    `/api/orders/order`,
+                    `/api/orders/allorder`,
                     {
                         body: JSON.stringify(Userdata.email),
                         headers: {
@@ -26,7 +26,6 @@ const Orders = ({ orders }) => {
                 );
 
                 const json = await response.json(); // parses JSON response into native JavaScript objects
-                console.log("order", json)
                 setorder(json.Orders)
 
             } catch (error) {
@@ -38,7 +37,7 @@ const Orders = ({ orders }) => {
             getorder()
     }, [Userdata])
 
-    if (!order) {
+    if (!order || order.length == 0) {
         return (
             <div className='grid place-content-center font-extrabold min-w-full min-h-screen'>{"Sorry! There are no items are available in this category"} </div>
         )
@@ -46,7 +45,7 @@ const Orders = ({ orders }) => {
         return (
 
             <div className='mt-28'>
-
+                <h1 className='text-center font-extrabold text-3xl'>Order History</h1>
                 <div className="bg-white p-8 rounded-md w-full">
 
                     <div>
@@ -75,6 +74,10 @@ const Orders = ({ orders }) => {
                                                 className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                                 Status
                                             </th>
+                                            <th
+                                                className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                                Veiw Details
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -91,7 +94,7 @@ const Orders = ({ orders }) => {
                                                         </div>
                                                     </td>
                                                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                        <p className="text-gray-900 whitespace-no-wrap">{Object.keys(od.items)}</p>
+                                                        <div className="text-gray-900 whitespace-no-wrap">{Object.keys(od.items).map((o, key) => { return <div key={key}>{o},</div> })}</div>
                                                     </td>
                                                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                                         <p className="text-gray-900 whitespace-no-wrap">
@@ -110,6 +113,9 @@ const Orders = ({ orders }) => {
                                                                 className="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
                                                             <span className="relative">{od.deliverystatus}</span>
                                                         </span>
+                                                    </td>
+                                                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                                        <button className='bg-green-300 p-2 rounded-md' onClick={() => { router.push(`/order?id=${od.orderid}`) }}>Veiw Details</button>
                                                     </td>
                                                 </tr>
                                             )
