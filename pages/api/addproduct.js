@@ -9,17 +9,17 @@ const handler = (async (req, res) => {
         const token = req.body.token;
 
         let prod = await product.findOne({ name: req.body.name })
+        const data = await jwt.verify(token, process.env.JWT_SECRET);
         if (prod) {
             return res.status(400).json({ success: false, msg: "sorry! this Product is already registered" })
         }
-        else if (!token) {
+        else if (!token || !data.user.isAdmin) {
             return res.status(401).send({ success: false, msg: "Please authenticate using valid token1" })
 
         }
         else {
             try {
 
-                const data = await jwt.verify(token, process.env.JWT_SECRET);
                 let user = data.user.email;
                 let p = new Product({
                     name: req.body.name,
