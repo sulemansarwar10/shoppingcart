@@ -18,7 +18,7 @@ const Addproduct = () => {
         if (!localStorage.getItem("token")) {
             router.push('/')
         } else {
-            setproduct({ ...product, token: localStorage.getItem("token") })
+            setproduct({ ...product, token: JSON.parse(localStorage.getItem("token")).token })
         }
     }, [Userdata])
 
