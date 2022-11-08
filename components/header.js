@@ -68,7 +68,7 @@ const Header = () => {
 
                                     <ul>
                                         <a onClick={() => router.push('/myaccount')} ><li className='hover:bg-green-600 p-3 w-36 m-3 cursor-pointer rounded-lg'>My Account</li></a>
-                                        <a onClick={() => router.push('/addproduct')} > <li className='hover:bg-green-600 p-3 w-36 m-3 cursor-pointer rounded-lg'>Add Product</li></a>
+                                        {Userdata.isAdmin && <a onClick={() => router.push('/addproduct')} > <li className='hover:bg-green-600 p-3 w-36 m-3 cursor-pointer rounded-lg'>Add Product</li></a>}
                                         <a onClick={() => router.push('/orders')} ><li className='hover:bg-green-600 p-3 w-36 m-3 cursor-pointer rounded-lg'>Orders</li></a>
                                         <a onClick={logout}>  <li className='hover:bg-green-600 p-3 w-36 m-3 cursor-pointer rounded-lg'>Log Out</li></a>
                                     </ul>

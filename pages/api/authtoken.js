@@ -16,7 +16,7 @@ const handler = (async (req, res) => {
             try {
 
                 const data = await jwt.verify(token, process.env.JWT_SECRET);
-                let user = { name: data.user.name, email: data.user.email, token: token };
+                let user = { name: data.user.name, email: data.user.email, isAdmin: data.user.isAdmin, token: token };
                 return res.status(200).json({ success: true, msg: "Successfully Verify Token", User: user })
             } catch (error) {
                 return res.status(401).send({ success: false, msg: "Please authenticate using valid token" })

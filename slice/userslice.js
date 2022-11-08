@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    name: "", email: "", token: "", status: 'idle',
+    name: "", email: "", isAdmin: false, token: "", status: 'idle',
 }
 
 
@@ -45,7 +45,7 @@ export const checktoken = createAsyncThunk(
 
             const json = await response.json(); // parses JSON response into native JavaScript objects
             console.log("signinslice", json)
-         
+
             return json;
         } catch (error) {
 
@@ -78,6 +78,7 @@ export const userSlice = createSlice({
                     state.token = action.payload.User.token
                     state.name = action.payload.User.name
                     state.email = action.payload.User.email
+                    state.isAdmin = action.payload.User.isAdmin
                     state.status = 'idle';
                 } else {
                     state.token = ""

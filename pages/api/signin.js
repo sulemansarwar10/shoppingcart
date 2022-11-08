@@ -29,7 +29,8 @@ const handler = async (req, res) => {
                 const data = {
                     user: {
                         name: user.fname,
-                        email: user.email
+                        email: user.email,
+                        isAdmin: user.isAdmin
                     }
                 }
                 const authtoken = await jwt.sign(data, process.env.JWT_SECRET, { expiresIn: '1d' });
