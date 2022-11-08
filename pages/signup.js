@@ -35,7 +35,6 @@ function Signup() {
 
                 const json = await response.json(); // parses JSON response into native JavaScript objects
 
-                console.log("sign in response", json)
                 if (json.success) {
 
                     dispatch(successtoast(json.msg))
@@ -61,7 +60,7 @@ function Signup() {
 
                             <img
                                 className="w-full h-auto bg-gray-400 hidden lg:block lg:w-2/4 bg-cover rounded-l-lg"
-                                src='https://source.unsplash.com/4A9IELfRdwE/600x800'
+                                src='https://source.unsplash.com/4A9IELfRdwE/600x800' alt="create account"
                             />
 
                             <div className="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none">

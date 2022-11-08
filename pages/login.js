@@ -12,7 +12,7 @@ function Login() {
 
     const onchange = (e) => {
         setuser({ ...user, [e.target.name]: e.target.value })
-        //  console.log(user)
+
     }
     const submithandle = async (e) => {
         e.preventDefault();
@@ -23,7 +23,7 @@ function Login() {
         else {
             let data = await dispatch(login(user))
             let response = data.payload
-            console.log("signinpage", data)
+
             if (response && response.success) {
 
                 dispatch(successtoast(response.msg))

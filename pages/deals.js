@@ -7,31 +7,10 @@ import mongoose from "mongoose";
 import Product from '../models/product';
 
 const Deals = ({ items }) => {
-    //    const [items, setitems] = useState()
+
     const dispatch = useDispatch()
     const Userdata = useSelector(selectUser);
     const Cartdata = useSelector(selectCart);
-
-    // useEffect(() => {
-    //     async function fetchData() {
-
-    //         try {
-    //             const response = await fetch(
-    //                 `/api/products/deals`,
-    //                 {
-    //                     method: 'GET'
-    //                 }
-    //             );
-
-    //             const json = await response.json(); // parses JSON response into native JavaScript objects
-    //             setitems(json.products)
-    //         } catch (error) {
-
-    //         }
-    //     }
-    //     fetchData();
-
-    // }, [])
 
 
     if (!items || items == 0) {

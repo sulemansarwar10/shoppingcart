@@ -47,9 +47,6 @@ const MyOrder = ({ order }) => {
                                                 <td className="px-5 py-5 border-b border-green-200 bg-white text-sm">
                                                     <div className="flex items-center">
                                                         <div className="flex-shrink-0 w-15 h-15">
-                                                            {/* <img className="w-full h-full rounded-full"
-                                                            src={orderitems[od].img}
-                                                            alt="" /> */}
                                                             <Image src={orderitems[od].img} alt="ecommerce" className="w-full h-full rounded-full" width={50} height={50} />
 
                                                         </div>

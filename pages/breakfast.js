@@ -1,39 +1,19 @@
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { checktoken, selectUser } from '../slice/userslice'
+import { selectUser } from '../slice/userslice'
 import { selectCart, addtocart } from '../slice/cartslice'
 import Image from 'next/image'
 import mongoose from "mongoose";
 import Product from '../models/product';
 
 const Breakfast = ({ items }) => {
-    // const [items, setitems] = useState()
+
     const router = useRouter()
     const dispatch = useDispatch()
     const Userdata = useSelector(selectUser);
     const Cartdata = useSelector(selectCart);
 
-    // useEffect(() => {
-    //     async function fetchData() {
-    //         try {
-    //             const response = await fetch(
-    //                 `/api/products/breakfast`,
-    //                 {
-    //                     method: 'GET'
-    //                 }
-    //             );
-
-    //             const json = await response.json(); // parses JSON response into native JavaScript objects
-    //             console.log(json, "breakfast")
-    //             setitems(json.products)
-    //         } catch (error) {
-
-    //         }
-    //     }
-    //     fetchData();
-
-    // }, [])
     if (!items || items == 0) {
 
         return (

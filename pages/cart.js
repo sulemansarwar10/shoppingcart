@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
-import { checktoken, selectUser } from '../slice/userslice'
+import { selectUser } from '../slice/userslice'
 import { successtoast, warntoast } from '../slice/toastslice'
 import { selectCart, addtocart, removetocart, clearcart, checkout, setorderinfo, settoken } from '../slice/cartslice'
+import Image from 'next/image'
 
 const Cart = () => {
     const router = useRouter()
@@ -79,7 +80,7 @@ const Cart = () => {
                     <label className="block mt-2 text-2xl font-medium text-gray-900 dark:text-gray-300">Your Cart</label>
                     {Object.keys(cart).map((item, key) => {
                         return <div key={key} className="m-7 flex justify-around md:border-green-500 md:border-4">
-                            <img src={cart[item].img} className="w-28 h-28" />
+                            <Image src={cart[item].img} alt="ecommerce" width={100} height={100} />
                             <div className='mt-5'>
                                 <h1 className='font-extrabold'>{cart[item].name}</h1>
                                 <h3>Rs. {cart[item].price} X {cart[item].qty}={cart[item].price * cart[item].qty}</h3>

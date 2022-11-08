@@ -9,7 +9,6 @@ function Forgot() {
     const [user, setuser] = useState({ email: "" })
     const onchange = (e) => {
         setuser({ ...user, [e.target.name]: e.target.value })
-        //  console.log(user)
     }
     const submithandle = async (e) => {
         e.preventDefault();
@@ -31,8 +30,6 @@ function Forgot() {
                 );
 
                 const json = await response.json(); // parses JSON response into native JavaScript objects
-
-                console.log("sign in response", json)
                 if (json.success) {
 
                     dispatch(successtoast(json.msg))
@@ -56,7 +53,7 @@ function Forgot() {
 
                             <img
                                 className="w-full h-auto bg-gray-400 hidden lg:block lg:w-1/2 bg-cover rounded-l-lg"
-                                src='https://source.unsplash.com/FnA5pAzqhMM/600x800'
+                                src='https://source.unsplash.com/FnA5pAzqhMM/600x800' alt="forgot password"
                             />
 
                             <div className="w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded-l-none">

@@ -9,7 +9,7 @@ function Contactus() {
     const [user, setuser] = useState({ name: "", email: "", contact: "", message: "" })
     const onchange = (e) => {
         setuser({ ...user, [e.target.name]: e.target.value })
-        //  console.log(user)
+    
     }
     const submithandle = async (e) => {
         e.preventDefault();
@@ -31,7 +31,6 @@ function Contactus() {
 
                 const json = await response.json(); // parses JSON response into native JavaScript objects
 
-                console.log("sign in response", json)
                 if (json.success) {
 
                     dispatch(successtoast(json.msg))
